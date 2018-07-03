@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <script type="text/javascript">
+    	
+   		document.addEventListener('plusready', function(){
+   			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+   			
+   		});
+   		
+    </script>
+</head>
+<body>
+	
+	
+		 姓名:<input type="text" name="username" id="username" />
+		<input type="submit" value="提交" class="test"/>
+	<ul id="list">
+
+    </ul>
+</body>
+
+<script src="./static/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	
+	$(function(){
+		$(".test").click(function(){
+			
+			$.ajax({
+
+				type:"post",
+				url:"http://localhost/res/public/index/Index/test",
+				data:{
+							username:$('#username').val(),
+							password:$('#password').val()
+				},
+				async:true,
+
+				success:function(res){
+					var a=JSON.parse(res);//json的字符串转换成对象
+					console.log(a);
+					var as="";
+					$.each(a.data, function(i,items) {
+						//a.data 是数组 item：相对于对象this
+						console.log(i);
+						as+="<li>"+"id:"+items.id+"</li>"+"<li>"+"姓名："+items.username+"</li>";
+						as+="<li>"+"密码："+items.password+"</li>";
+					});
+					$('#list').html(as);
+					 
+				},	
+				
+				error:function(res){
+					console.log(res);
+				}
+
+			});
+		
+		});
+	
+	});
+	
+</script>
+</html>
